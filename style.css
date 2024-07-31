@@ -86,12 +86,23 @@ button:hover {
     background-color: #1a1a1a;
     margin-bottom: 10px;
     border-radius: 4px;
+    position: relative; /* Dodane dla umiejscowienia cienia */
 }
 
 #songs li img {
+    
     margin-bottom: 10px;
     max-width: 100%;
     border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Dodanie czarnego cienia */
+}
+
+#songs li audio {
+    color: #1c1c1c8a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    height: 35px;
+    width: 250px; /* Zmniejsza szerokość odtwarzacza audio */
+    margin-bottom: 20px; /* Dodaje margines poniżej odtwarzacza audio */
 }
 
 #songs li span:first-of-type {
@@ -136,53 +147,6 @@ button:hover {
     border: 1px solid #333;
     width: 100%;
     margin-bottom: 5px;
-}
-
-/* Stylizacja odtwarzacza audio */
-.audio-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-.audio-container audio {
-    width: 100%;
-    max-width: 300px; /* Maksymalna szerokość odtwarzacza */
-    background: #333; /* Tło odtwarzacza */
-    border: 1px solid #555; /* Obramowanie odtwarzacza */
-    border-radius: 8px; /* Zaokrąglone rogi */
-    padding: 5px; /* Wewnętrzne marginesy */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Cień */
-}
-
-.audio-container .audio-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.audio-container button {
-    background: #444; /* Tło przycisków */
-    color: #fff; /* Kolor tekstu przycisków */
-    border: none;
-    border-radius: 5px; /* Zaokrąglone rogi przycisków */
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 14px;
-    margin: 0 5px;
-    transition: background 0.3s, transform 0.2s;
-}
-
-.audio-container button:hover {
-    background: #555; /* Jaśniejsze tło przycisków po najechaniu */
-    transform: scale(1.05); /* Powiększenie przycisków po najechaniu */
-}
-
-.audio-container button:disabled {
-    background: #666; /* Tło przycisków nieaktywnych */
-    cursor: not-allowed; /* Kursor "zabroniony" dla nieaktywnych przycisków */
 }
 
 @media (min-width: 480px) {
