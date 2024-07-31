@@ -9,7 +9,8 @@ const firebaseConfig = {
     storageBucket: "login-page-e09ea.appspot.com",
     messagingSenderId: "966052546550",
     appId: "1:966052546550:web:c2db5ee2b2222e6a25a9d7",
-};
+    measurementId: "G-H36NM4MTRF"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -110,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (const song of songs) {
                 const thumbnailUrl = song.thumbnail || ''; 
                 const title = song.title || extractTitleFromUrl(song.tiktokUrl);
+                const audioUrl = song.audioUrl || ''; // Pobieranie URL do pliku MP3
                 const registeredUsers = song.registeredUsers || [];
                 const userIsRegistered = registeredUsers.includes(currentUsername);
 
@@ -117,6 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.innerHTML = `
                     <img src="${thumbnailUrl}" alt="${title} thumbnail">
                     <span>${title}</span>
+                    <audio controls>
+                        <source src="${audioUrl}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
                     <span class="users">${registeredUsers.join(', ')}</span>
                     <button class="add-user-btn" data-id="${song.id}" data-state="${userIsRegistered ? 'remove' : 'add'}">
                         ${userIsRegistered ? '-' : '+'}
