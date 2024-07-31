@@ -117,7 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <img src="${thumbnailUrl}" alt="${title} thumbnail">
+                    <a href="${song.tiktokUrl}" target="_blank">
+                        <img src="${thumbnailUrl}" alt="${title} thumbnail">
+                    </a>
                     <span>${title}</span>
                     <audio controls>
                         <source src="${audioUrl}" type="audio/mpeg">
