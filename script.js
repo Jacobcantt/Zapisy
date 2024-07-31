@@ -117,9 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <a href="${song.tiktokUrl}" target="_blank">
-                        <img src="${thumbnailUrl}" alt="${title} thumbnail">
-                    </a>
+                    <img src="${thumbnailUrl}" alt="${title} thumbnail" data-url="${song.tiktokUrl}">
                     <span>${title}</span>
                     <audio controls>
                         <source src="${audioUrl}" type="audio/mpeg">
@@ -136,6 +134,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const addUserButtons = document.querySelectorAll('.add-user-btn');
             addUserButtons.forEach(button => {
                 button.addEventListener('click', handleAddUserClick);
+            });
+
+            const thumbnails = document.querySelectorAll('#songs li img');
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', (e) => {
+                    const tiktokUrl = e.target.dataset.url;
+                    if (tiktokUrl) {
+                        window.open(tiktokUrl, '_blank');
+                    }
+                });
             });
 
             songListDiv.classList.remove('hidden');
