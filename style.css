@@ -1,8 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url('images/background.jpg'); /* Ścieżka do obrazu tła */
-    background-size: cover; /* Rozciąga tło, aby pokryło całe body */
-    background-position: center; /* Wyśrodkowuje obraz tła */
+    background-color: #ffffff;
     color: #fff;
     margin: 0;
     padding: 0;
@@ -12,32 +10,32 @@ body {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.075); /* Przezroczysty czarny kolor */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.447);
+    background-color: #00000069;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     box-sizing: border-box;
 }
 
-h1 {
+/* Nowe style dla logo i nagłówka */
+.logo-container {
     text-align: center;
-    color: #ffffff;
-    font-size: 36px; /* Zwiększa rozmiar czcionki do 36px */
-    margin: 20px 0;  /* Dodaje przestrzeń nad i pod tytułem */
-    padding: 10px;   /* Dodaje wewnętrzny odstęp, aby tytuł miał więcej przestrzeni */
-    font-weight: bold; /* Opcjonalnie: pogrubia tytuł */
+    margin-bottom: 20px;
 }
-h5 {
-    text-align: center;
-    color: #707070;
-    font-size: 16px; /* Zwiększa rozmiar czcionki do 36px */
-    margin: 20px 0;  /* Dodaje przestrzeń nad i pod tytułem */
-    padding: 10px;   /* Dodaje wewnętrzny odstęp, aby tytuł miał więcej przestrzeni */
-    
+
+.logo-container .logo-image {
+    max-width: 150px; /* Dostosuj rozmiar logo */
+    height: auto;
 }
+
+.logo-container h1 {
+    margin-top: 10px; /* Odstęp między logo a tekstem */
+    font-size: 36px; /* Dostosuj rozmiar czcionki */
+    color: #fff;
+}
+
 .instruction {
     text-align: center;
-    color: #ff4ebe;
-    font-weight: bold;
+    color: #aaa;
 }
 
 .login-container {
@@ -89,13 +87,12 @@ button:hover {
 #songs li {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Wyśrodkowuje zawartość wzdłuż osi poprzecznej */
-    justify-content: center; /* Opcjonalnie: wyśrodkowuje wzdłuż osi głównej */
+    align-items: center;
     padding: 10px;
     border-bottom: 1px solid #555555a6;
-    background-color: rgba(0, 0, 0, 0.701); /* Przezroczysty czarny kolor */
+    background-color: #000000a5;
     margin-bottom: 10px;
-    border-radius: 30px;
+    border-radius: 10px;
     position: relative; /* Dodane dla umiejscowienia cienia */
 }
 
@@ -104,6 +101,7 @@ button:hover {
     max-width: 100%;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Dodanie czarnego cienia */
+    cursor: pointer; /* Kursor zmienia się na wskaźnik przy najechaniu */
 }
 
 #songs li audio {
@@ -121,15 +119,13 @@ button:hover {
     margin-bottom: 10px;
     font-weight: bold;
 }
-.hidden {
-    display: none;
-}
+
 /* Przyciski "+" i "-" */
 .add-user-btn {
     padding: 0;
     width: 50px;
     height: 50px;
-    background-color: #28a746; /* Domyślnie zielony dla "+" */
+    background-color: #28a745; /* Domyślnie zielony dla "+" */
     color: white;
     border: none;
     border-radius: 10%;
@@ -152,10 +148,10 @@ button:hover {
 .users {
     font-size: 12px;
     color: #ccc;
-    background-color: #000000;
+    background-color: #222;
     padding: 2px 5px;
     border-radius: 4px;
-    /*border: 1px solid #ffffffa0;*/
+    border: 1px solid #333;
     width: 100%;
     margin-bottom: 5px;
 }
