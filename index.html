@@ -1,31 +1,34 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jacobcan - Lista Piosenek</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Lista Piosenek</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Jacobcan - Lista Piosenek</h1>
-        <p class="instruction">Zarejestruj się lub zaloguj, aby zapisać się na piosenki.</p>
+        <div class="logo-container">
+            <img src="image/Logo1.png" alt="Logo" class="logo-image">
+            <h1>Lista piosenek</h1>
+        </div>
         
         <div class="login-container">
             <form id="loginForm">
-                <input type="text" id="instagramUrl" placeholder="Wklej link do profilu na Instagramie" required>
-                <input type="password" id="password" placeholder="Podaj hasło" required>
-                <button type="submit">Zaloguj/Zarejestruj</button>
+                <input type="text" id="instagramUrl" placeholder="Link do profilu na Instagramie" required>
+                <input type="password" id="password" placeholder="Hasło" required>
+                <button type="submit">Zaloguj się</button>
             </form>
         </div>
-
+        <div class="instruction">
+            Zaloguj się, aby zobaczyć listę piosenek.
+        </div>
         <div id="songList" class="hidden">
             <h2>Zapisz się do piosenki pod którą będzie edit.</h2>
             <h5>Jeżeli nagrałaś Tiktoka do jakiejś piosenki, zapisz się i czekaj na edita!!</h5>
             <ul id="songs"></ul>
         </div>
-        
     </div>
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
