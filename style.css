@@ -3,7 +3,7 @@ body {
     background-image: url('images/background.jpg'); /* Ścieżka do obrazu tła */
     background-size: cover; /* Rozciąga tło, aby pokryło całe body */
     background-position: center; /* Wyśrodkowuje obraz tła */
-    color: #fff;
+    color: #000000;
     margin: 0;
     padding: 0;
 }
