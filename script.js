@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, query, where, updateDoc, arrayUnion, arrayRemove, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, query, where, updateDoc, arrayUnion, arrayRemove, doc, getDoc, orderBy } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const songsUl = document.getElementById('songs');
     const loginContainer = document.querySelector('.login-container');
     const instructionText = document.querySelector('.instruction');
+    const chatContainer = document.getElementById('chatContainer');
+    const chatForm = document.getElementById('chatForm');
+    const messageInput = document.getElementById('messageInput');
+    const messagesDiv = document.getElementById('messages');
     let currentUsername = '';
 
     loginForm.addEventListener('submit', async (e) => {
@@ -84,11 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
         await addDoc(osobyRef, { instagramUrl, password });
     }
 
-    async function showUserContent(username) {
+    function showUserContent(username) {
         instructionText.textContent = `Witaj, ${username}!`;
         loginContainer.style.display = 'none';
         songListDiv.classList.remove('hidden');
+        chatContainer.classList.remove('hidden');
         loadSongs();
+        loadChatMessages();
+        setInterval(loadChatMessages, 5000); // Refresh chat every 5 seconds
     }
 
     function extractTitleFromUrl(url) {
@@ -116,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const userIsRegistered = registeredUsers.includes(currentUsername);
 
                 const li = document.createElement('li');
-                li.innerHTML = `
-                    <img src="${thumbnailUrl}" alt="${title} thumbnail" data-url="${song.tiktokUrl}">
+                li.innerHTML = 
+                    `<img src="${thumbnailUrl}" alt="${title} thumbnail" data-url="${song.tiktokUrl}">
                     <span>${title}</span>
                     <audio controls>
                         <source src="${audioUrl}" type="audio/mpeg">
@@ -126,8 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="users">${registeredUsers.join(', ')}</span>
                     <button class="add-user-btn" data-id="${song.id}" data-state="${userIsRegistered ? 'remove' : 'add'}">
                         ${userIsRegistered ? '-' : '+'}
-                    </button>
-                `;
+                    </button>`;
                 songsUl.appendChild(li);
             }
 
@@ -171,34 +177,47 @@ document.addEventListener('DOMContentLoaded', () => {
         loadSongs();
     }
 
-    async function fetchThumbnailUrl(tiktokUrl) {
+    async function loadChatMessages() {
         try {
-            const response = await fetch(`https://www.tiktok.com/oembed?url=${tiktokUrl}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            return data.thumbnail_url;
+            const chatRef = collection(db, 'chat');
+            const q = query(chatRef, orderBy('timestamp', 'asc'));
+            const chatSnapshot = await getDocs(q);
+            const chatMessages = chatSnapshot.docs.map(doc => doc.data());
+
+            messagesDiv.innerHTML = '';
+            chatMessages.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                msgDiv.textContent = `${msg.username}: ${msg.message}`;
+                messagesDiv.appendChild(msgDiv);
+            });
+
+            // Scroll to the bottom of the messages div
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         } catch (error) {
-            console.error('Error fetching TikTok details:', error);
-            return null;
+            console.error('Error loading chat messages:', error);
         }
     }
 
-    async function updateSongsWithThumbnails() {
-        const songsRef = collection(db, 'songs');
-        const songSnapshot = await getDocs(songsRef);
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-        for (const doc of songSnapshot.docs) {
-            const songData = doc.data();
-            const thumbnailUrl = await fetchThumbnailUrl(songData.tiktokUrl);
-            
-            if (thumbnailUrl) {
-                await updateDoc(doc.ref, { thumbnail: thumbnailUrl });
+        const message = messageInput.value.trim();
+        if (message) {
+            try {
+                await addChatMessage(message);
+                messageInput.value = '';
+            } catch (error) {
+                console.error('Error sending message:', error);
             }
         }
-    }
+    });
 
-    // Uncomment the following line if you need to update thumbnails manually
-    // updateSongsWithThumbnails();
+    async function addChatMessage(message) {
+        const chatRef = collection(db, 'chat');
+        await addDoc(chatRef, {
+            username: currentUsername,
+            message: message,
+            timestamp: new Date()
+        });
+    }
 });
