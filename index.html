@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jacobcan - Lista Piosenek</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Jacobcan - Lista Piosenek</h1>
+        <p class="instruction">Zarejestruj się lub zaloguj, aby zapisać się na piosenki.</p>
+        
+        <div class="login-container">
+            <form id="loginForm">
+                <input type="text" id="instagramUrl" placeholder="Wklej link do profilu na Instagramie" required>
+                <input type="password" id="password" placeholder="Podaj hasło" required>
+                <button type="submit">Zaloguj/Zarejestruj</button>
+            </form>
+        </div>
+
+        <div id="songList" class="hidden">
+            <h2>Lista Piosenek</h2>
+            <ul id="songs"></ul>
+        </div>
+    </div>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

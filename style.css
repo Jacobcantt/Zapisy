@@ -1,0 +1,146 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1a1a1a;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+}
+
+.instruction {
+    text-align: center;
+    color: #aaa;
+}
+
+.login-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: inline-block;
+    width: 100%;
+}
+
+input[type="text"],
+input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #333;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+#songList {
+    text-align: center;
+}
+
+#songs {
+    list-style: none;
+    padding: 0;
+}
+
+#songs li {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse; /* Przyciski na prawo na urządzeniach mobilnych */
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    background-color: #1a1a1a;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+#songs li img {
+    margin-bottom: 10px;
+    max-width: 100%;
+    border-radius: 50px;
+}
+
+#songs li span:first-of-type {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Przyciski "+" i "-" */
+.add-user-btn {
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    background-color: #28a745; /* Domyślnie zielony dla "+" */
+    color: white;
+    border: none;
+    border-radius: 10%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-user-btn[data-state="remove"] {
+    background-color: #dc3545; /* Czerwony dla "-" */
+}
+
+.add-user-btn:hover {
+    transform: scale(1.1);
+}
+
+.users {
+    font-size: 12px;
+    color: #ccc;
+    background-color: #222;
+    padding: 2px 5px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+@media (min-width: 480px) {
+    #songs li {
+        flex-direction: row; /* Przyciski po prawej stronie na większych ekranach */
+    }
+
+    .add-user-btn {
+        margin-top: 0;
+        align-self: center;
+    }
+}
