@@ -19,6 +19,10 @@ body {
 h1 {
     text-align: center;
     color: #fff;
+    font-size: 36px; /* Zwiększa rozmiar czcionki do 36px */
+    margin: 20px 0;  /* Dodaje przestrzeń nad i pod tytułem */
+    padding: 10px;   /* Dodaje wewnętrzny odstęp, aby tytuł miał więcej przestrzeni */
+    font-weight: bold; /* Opcjonalnie: pogrubia tytuł */
 }
 
 .instruction {
@@ -68,28 +72,31 @@ button:hover {
 }
 
 #songs {
-    text-align: center; /* Wyśrodkowuje wszystkie elementy wewnętrzne */
+    list-style: none;
+    padding: 0;
 }
 
 #songs li {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Wyśrodkowuje elementy wzdłuż osi poprzecznej */
-    justify-content: center; /* Wyśrodkowuje elementy wzdłuż osi głównej */
-    margin-bottom: 10px;
+    align-items: center; /* Wyśrodkowuje zawartość wzdłuż osi poprzecznej */
+    justify-content: center; /* Opcjonalnie: wyśrodkowuje wzdłuż osi głównej */
     padding: 10px;
     border-bottom: 1px solid #333;
     background-color: #1a1a1a;
+    margin-bottom: 10px;
     border-radius: 4px;
 }
 
 #songs li img {
     margin-bottom: 10px;
     max-width: 100%;
-    border-radius: 50px;
+    border-radius: 4px;
 }
 
 #songs li span:first-of-type {
+    display: block; /* Umożliwia stosowanie text-align na elemencie */
+    text-align: center; /* Wyśrodkowuje tekst wewnątrz span */
     font-size: 20px;
     margin-bottom: 10px;
     font-weight: bold;
@@ -129,6 +136,53 @@ button:hover {
     border: 1px solid #333;
     width: 100%;
     margin-bottom: 5px;
+}
+
+/* Stylizacja odtwarzacza audio */
+.audio-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.audio-container audio {
+    width: 100%;
+    max-width: 300px; /* Maksymalna szerokość odtwarzacza */
+    background: #333; /* Tło odtwarzacza */
+    border: 1px solid #555; /* Obramowanie odtwarzacza */
+    border-radius: 8px; /* Zaokrąglone rogi */
+    padding: 5px; /* Wewnętrzne marginesy */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Cień */
+}
+
+.audio-container .audio-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.audio-container button {
+    background: #444; /* Tło przycisków */
+    color: #fff; /* Kolor tekstu przycisków */
+    border: none;
+    border-radius: 5px; /* Zaokrąglone rogi przycisków */
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.audio-container button:hover {
+    background: #555; /* Jaśniejsze tło przycisków po najechaniu */
+    transform: scale(1.05); /* Powiększenie przycisków po najechaniu */
+}
+
+.audio-container button:disabled {
+    background: #666; /* Tło przycisków nieaktywnych */
+    cursor: not-allowed; /* Kursor "zabroniony" dla nieaktywnych przycisków */
 }
 
 @media (min-width: 480px) {
