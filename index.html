@@ -17,7 +17,8 @@
         <div class="login-container">
             <form id="loginForm">
                 <input type="text" id="instagramUrl" placeholder="Wklej link do profilu na Instagramie" required>
-                <input type="password" id="password" placeholder="Podaj hasło" required>
+                <input type="password" id="password" placeholder="Hasło (Pierwsze wpisane hasło będzie przypisane do tego konta)" required>
+                <h4>Nie podawaj hasła do twojego ig!!!</h4>
                 <button type="submit">Zaloguj/Zarejestruj</button>
             </form>
         </div>
@@ -27,7 +28,14 @@
             <h5>Jeżeli nagrałaś Tiktoka do jakiejś piosenki, zapisz się i czekaj na edita!!.</h5>
             <ul id="songs"></ul>
         </div>
-        
+        <div id="chatContainer" class="hidden">
+            <h2>Chat</h2>
+            <div id="messages"></div>
+            <form id="chatForm">
+                <input type="text" id="messageInput" placeholder="Wpisz wiadomość..." required>
+                <button type="submit">Wyślij</button>
+            </form>
+        </div>
     </div>
     <script type="module" src="script.js"></script>
 </body>
