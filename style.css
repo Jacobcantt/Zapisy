@@ -1,6 +1,8 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #000;
+    background-image: url('images/background.jpg'); /* Ścieżka do obrazu tła */
+    background-size: cover; /* Rozciąga tło, aby pokryło całe body */
+    background-position: center; /* Wyśrodkowuje obraz tła */
     color: #fff;
     margin: 0;
     padding: 0;
@@ -10,24 +12,32 @@ body {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #1a1a1a;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.075); /* Przezroczysty czarny kolor */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.447);
     border-radius: 8px;
     box-sizing: border-box;
 }
 
 h1 {
     text-align: center;
-    color: #fff;
+    color: #ffffff;
     font-size: 36px; /* Zwiększa rozmiar czcionki do 36px */
     margin: 20px 0;  /* Dodaje przestrzeń nad i pod tytułem */
     padding: 10px;   /* Dodaje wewnętrzny odstęp, aby tytuł miał więcej przestrzeni */
     font-weight: bold; /* Opcjonalnie: pogrubia tytuł */
 }
-
+h5 {
+    text-align: center;
+    color: #707070;
+    font-size: 16px; /* Zwiększa rozmiar czcionki do 36px */
+    margin: 20px 0;  /* Dodaje przestrzeń nad i pod tytułem */
+    padding: 10px;   /* Dodaje wewnętrzny odstęp, aby tytuł miał więcej przestrzeni */
+    
+}
 .instruction {
     text-align: center;
-    color: #aaa;
+    color: #ff4ebe;
+    font-weight: bold;
 }
 
 .login-container {
@@ -82,18 +92,17 @@ button:hover {
     align-items: center; /* Wyśrodkowuje zawartość wzdłuż osi poprzecznej */
     justify-content: center; /* Opcjonalnie: wyśrodkowuje wzdłuż osi głównej */
     padding: 10px;
-    border-bottom: 1px solid #333;
-    background-color: #1a1a1a;
+    border-bottom: 1px solid #555555a6;
+    background-color: rgba(0, 0, 0, 0.701); /* Przezroczysty czarny kolor */
     margin-bottom: 10px;
-    border-radius: 4px;
+    border-radius: 30px;
     position: relative; /* Dodane dla umiejscowienia cienia */
 }
 
 #songs li img {
-    
     margin-bottom: 10px;
     max-width: 100%;
-    border-radius: 4px;
+    border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Dodanie czarnego cienia */
 }
 
@@ -112,13 +121,15 @@ button:hover {
     margin-bottom: 10px;
     font-weight: bold;
 }
-
+.hidden {
+    display: none;
+}
 /* Przyciski "+" i "-" */
 .add-user-btn {
     padding: 0;
     width: 50px;
     height: 50px;
-    background-color: #28a745; /* Domyślnie zielony dla "+" */
+    background-color: #28a746; /* Domyślnie zielony dla "+" */
     color: white;
     border: none;
     border-radius: 10%;
@@ -141,21 +152,49 @@ button:hover {
 .users {
     font-size: 12px;
     color: #ccc;
-    background-color: #222;
+    background-color: #000000;
     padding: 2px 5px;
     border-radius: 4px;
-    border: 1px solid #333;
+    /*border: 1px solid #ffffffa0;*/
     width: 100%;
     margin-bottom: 5px;
 }
 
-@media (min-width: 480px) {
-    #songs li {
-        flex-direction: row; /* Przyciski po prawej stronie na większych ekranach */
+/* Media Queries for Larger Screens */
+@media (min-width: 768px) {
+    .container {
+        max-width: 900px;
+        padding: 30px;
     }
 
-    .add-user-btn {
-        margin-top: 0;
-        align-self: center;
+    #songs li {
+        flex-direction: row; /* Przyciski po prawej stronie na większych ekranach */
+        padding: 20px;
+    }
+
+    #songs li img {
+        max-width: 150px; /* Zmniejsza maksymalną szerokość miniaturki na większych ekranach */
+    }
+
+    #songs li audio {
+        width: 300px; /* Zwiększa szerokość odtwarzacza audio na większych ekranach */
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+    }
+
+    #songs li {
+        padding: 30px;
+    }
+
+    #songs li img {
+        max-width: 200px; /* Dostosowanie maksymalnej szerokości miniaturki na dużych ekranach */
+    }
+
+    #songs li audio {
+        width: 400px; /* Dostosowanie szerokości odtwarzacza audio na dużych ekranach */
     }
 }
