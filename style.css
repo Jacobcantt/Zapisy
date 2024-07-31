@@ -1,7 +1,8 @@
 body {
     font-family: Arial, sans-serif;
-    background: url('image/your-background.jpg') no-repeat center center fixed; /* Ustaw własne tło */
-    background-size: cover;
+    background-image: url('images/background.jpg'); /* Ścieżka do obrazu tła */
+    background-size: cover; /* Rozciąga tło, aby pokryło całe body */
+    background-position: center; /* Wyśrodkowuje obraz tła */
     color: #fff;
     margin: 0;
     padding: 0;
@@ -11,40 +12,43 @@ body {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.6); /* Lekko przezroczyste tło dla kontrastu */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.075); /* Przezroczysty czarny kolor */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.447);
     border-radius: 8px;
     box-sizing: border-box;
+}
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
 }
 
 h1 {
     text-align: center;
-    color: #fff;
-    font-size: 36px;
-    margin: 20px 0;
-    padding: 10px;
-    font-weight: bold;
+    color: #ffffff;
+    font-size: 36px; /* Zwiększa rozmiar czcionki do 36px */
+    margin: 20px 0;  /* Dodaje przestrzeń nad i pod tytułem */
+    padding: 10px;   /* Dodaje wewnętrzny odstęp, aby tytuł miał więcej przestrzeni */
+    font-weight: bold; /* Opcjonalnie: pogrubia tytuł */
 }
-
-h2, h5 {
-    text-align: center;
-    margin: 10px 0;
-}
-
-h2 {
-    color: #fffa;
-    font-size: 28px;
-}
-
 h5 {
-    color: #ccc;
-    font-size: 16px;
+    text-align: center;
+    color: #707070;
+    font-size: 16px; /* Zwiększa rozmiar czcionki do 36px */
+    margin: 20px 0;  /* Dodaje przestrzeń nad i pod tytułem */
+    padding: 10px;   /* Dodaje wewnętrzny odstęp, aby tytuł miał więcej przestrzeni */
+    
 }
-
 .instruction {
     text-align: center;
-    color: #aaa;
-    font-size: 16px;
+    color: #ff4ebe;
+    font-weight: bold;
 }
 
 .login-container {
@@ -91,67 +95,55 @@ button:hover {
 #songs {
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
 #songs li {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Wyśrodkowuje zawartość wzdłuż osi poprzecznej */
+    justify-content: center; /* Opcjonalnie: wyśrodkowuje wzdłuż osi głównej */
     padding: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid #555555a6;
+    background-color: rgba(0, 0, 0, 0.701); /* Przezroczysty czarny kolor */
     margin-bottom: 10px;
-    border-radius: 10px;
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    border-radius: 30px;
+    position: relative; /* Dodane dla umiejscowienia cienia */
 }
 
 #songs li img {
     margin-bottom: 10px;
     max-width: 100%;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.3s;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Dodanie czarnego cienia */
 }
 
-#songs li img:hover {
-    transform: scale(1.05);
+#songs li audio {
+    color: #1c1c1c8a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    height: 35px;
+    width: 250px; /* Zmniejsza szerokość odtwarzacza audio */
+    margin-bottom: 20px; /* Dodaje margines poniżej odtwarzacza audio */
 }
 
 #songs li span:first-of-type {
-    display: block;
-    text-align: center;
+    display: block; /* Umożliwia stosowanie text-align na elemencie */
+    text-align: center; /* Wyśrodkowuje tekst wewnątrz span */
     font-size: 20px;
     margin-bottom: 10px;
     font-weight: bold;
 }
-
-#songs li audio {
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 20px;
+.hidden {
+    display: none;
 }
-
-.users {
-    font-size: 12px;
-    color: #ccc;
-    background-color: #222;
-    padding: 2px 5px;
-    border-radius: 4px;
-    border: 1px solid #333;
-    margin-top: 5px;
-    display: inline-block;
-}
-
+/* Przyciski "+" i "-" */
 .add-user-btn {
     padding: 0;
     width: 50px;
     height: 50px;
-    background-color: #28a745;
+    background-color: #28a746; /* Domyślnie zielony dla "+" */
     color: white;
     border: none;
-    border-radius: 50%;
+    border-radius: 10%;
     cursor: pointer;
     font-size: 20px;
     display: flex;
@@ -161,11 +153,22 @@ button:hover {
 }
 
 .add-user-btn[data-state="remove"] {
-    background-color: #dc3545;
+    background-color: #dc3545; /* Czerwony dla "-" */
 }
 
 .add-user-btn:hover {
     transform: scale(1.1);
+}
+
+.users {
+    font-size: 12px;
+    color: #ccc;
+    background-color: #000000;
+    padding: 2px 5px;
+    border-radius: 4px;
+    /*border: 1px solid #ffffffa0;*/
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 /* Media Queries for Larger Screens */
@@ -176,16 +179,16 @@ button:hover {
     }
 
     #songs li {
-        flex-direction: row;
+        flex-direction: row; /* Przyciski po prawej stronie na większych ekranach */
         padding: 20px;
     }
 
     #songs li img {
-        max-width: 150px;
+        max-width: 150px; /* Zmniejsza maksymalną szerokość miniaturki na większych ekranach */
     }
 
     #songs li audio {
-        max-width: 400px;
+        width: 300px; /* Zwiększa szerokość odtwarzacza audio na większych ekranach */
     }
 }
 
@@ -199,10 +202,10 @@ button:hover {
     }
 
     #songs li img {
-        max-width: 200px;
+        max-width: 200px; /* Dostosowanie maksymalnej szerokości miniaturki na dużych ekranach */
     }
 
     #songs li audio {
-        max-width: 500px;
+        width: 400px; /* Dostosowanie szerokości odtwarzacza audio na dużych ekranach */
     }
 }
