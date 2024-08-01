@@ -195,8 +195,93 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             });
+
+            // Intersection Observer dla efektu powiększenia kafelka
+            const songItems = document.querySelectorAll('#songs li');
+
+            const handleIntersection = (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(handleIntersection, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            });
+
+            songItems.forEach(item => observer.observe(item));
+
         } catch (error) {
             console.error('Error loading songs:', error);
+        }
+    }
+
+    async function handleAddUserClick(e) {
+        const button = e.target;
+        const songId = button.dataset.id;
+        const action = button.dataset.state;
+
+        try {
+            const songRef = doc(db, 'songs', songId);
+            if (action === 'add') {
+                await updateDoc(songRef, {
+                    registeredUsers: arrayUnion(currentUsername)
+                });
+                button.dataset.state = 'remove';
+                button.textContent = '-';
+            } else {
+                await updateDoc(songRef, {
+                    registeredUsers: arrayRemove(currentUsername)
+                });
+                button.dataset.state = 'add';
+                button.textContent = '+';
+            }
+        } catch (error) {
+            console.error('Error updating song users:', error);
+        }
+    }
+
+    async function loadChatMessages() {
+        try {
+            const chatRef = collection(db, 'chatMessages');
+            const q = query(chatRef, orderBy('timestamp', 'asc'));
+
+            onSnapshot(q, (snapshot) => {
+                chatMessages.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const message = doc.data();
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = `${message.username}: ${message.text}`;
+                    chatMessages.appendChild(messageElement);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const messageText = chatInput.value.trim();
+                if (messageText) {
+                    try {
+                        await addDoc(chatRef, {
+                            username: currentUsername,
+                            text: messageText,
+                            timestamp: new Date()
+                        });
+                        chatInput.value = '';
+                    } catch (error) {
+                        console.error('Error sending message:', error);
+                    }
+                }
+            });
+
+        } catch (error) {
+            console.error('Error loading chat messages:', error);
         }
     }
 
