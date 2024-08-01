@@ -127,17 +127,28 @@ button:hover {
     padding: 10px;
     border-bottom: 1px solid #555555a6;
     background-color: rgba(0, 0, 0, 0.701); /* Przezroczysty czarny kolor */
-    margin-bottom: 10px;
+    margin-bottom: 25px;
+    margin-top: 30px;
     border-radius: 30px;
     position: relative; /* Dodane dla umiejscowienia cienia */
 }
 
 /* Style dla widocznego elementu */
 #songs li.visible {
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Jasny cień dla widocznego elementu */
+    box-shadow: 0 0 15px rgb(212, 212, 212); /* Jasny cień dla widocznego elementu */
     transition: box-shadow 0.5s; /* Płynne przejście */
 }
+/* Styl dla powiększonego kafelka piosenki */
+#songs li.active {
+    transform: scale(104%); /* Powiększa kafelek o 10% */
+    box-shadow: 0 0 15px rgba(208, 208, 208, 0.426); /* Jasny cień */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Płynne przejścia */
+}
 
+/* Styl dla normalnego kafelka piosenki */
+#songs li {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Płynne przejścia */
+}
 /* Styl animacji różowej ramki */
 @keyframes borderAnimation {
     0% {
