@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, query, where, updateDoc, arrayUnion, arrayRemove, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, query, where, updateDoc, arrayUnion, arrayRemove, doc, getDoc, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginContainer = document.querySelector('.login-container');
     const instructionText = document.querySelector('.instruction');
     let currentUsername = '';
+
+    const chatContainer = document.getElementById('chatContainer');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -88,7 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
         instructionText.textContent = `Witaj, ${username}!`;
         loginContainer.style.display = 'none';
         songListDiv.classList.remove('hidden');
+        chatContainer.classList.remove('hidden');
         loadSongs();
+        loadChatMessages();
     }
 
     function extractTitleFromUrl(url) {
@@ -178,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 audio.addEventListener('ended', (e) => {
-                    // Usunięcie klasy 'playing' gdy audio jest zakończone
+                    // Usunięcie klasy 'playing' gdy audio się zakończy
                     const li = e.target.closest('li');
                     if (li) {
                         const img = li.querySelector('img');
@@ -188,80 +195,71 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             });
-
-            songListDiv.classList.remove('hidden');
-
-            // Intersection Observer dla widoczności piosenek
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    } else {
-                        entry.target.classList.remove('visible');
-                    }
-                });
-            }, {
-                threshold: 0.5 // Procent widoczności elementu potrzebny do uznania go za widoczny
-            });
-
-            // Dodanie Intersection Observer do każdego elementu listy
-            const items = document.querySelectorAll('#songs li');
-            items.forEach(item => {
-                observer.observe(item);
-            });
-
         } catch (error) {
             console.error('Error loading songs:', error);
         }
     }
 
-    async function handleAddUserClick(event) {
-        const songId = event.target.dataset.id;
-        const songRef = doc(db, 'songs', songId);
-        const songDoc = await getDoc(songRef);
-        const songData = songDoc.data();
-        const registeredUsers = songData.registeredUsers || [];
+    async function handleAddUserClick(e) {
+        const button = e.target;
+        const songId = button.dataset.id;
+        const action = button.dataset.state;
 
-        if (registeredUsers.includes(currentUsername)) {
-            await updateDoc(songRef, {
-                registeredUsers: arrayRemove(currentUsername)
-            });
-        } else {
-            await updateDoc(songRef, {
-                registeredUsers: arrayUnion(currentUsername)
-            });
-        }
-        loadSongs();
-    }
-
-    async function fetchThumbnailUrl(tiktokUrl) {
         try {
-            const response = await fetch(`https://www.tiktok.com/oembed?url=${tiktokUrl}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            const songRef = doc(db, 'songs', songId);
+            if (action === 'add') {
+                await updateDoc(songRef, {
+                    registeredUsers: arrayUnion(currentUsername)
+                });
+                button.dataset.state = 'remove';
+                button.textContent = '-';
+            } else {
+                await updateDoc(songRef, {
+                    registeredUsers: arrayRemove(currentUsername)
+                });
+                button.dataset.state = 'add';
+                button.textContent = '+';
             }
-            const data = await response.json();
-            return data.thumbnail_url;
+            loadSongs();
         } catch (error) {
-            console.error('Error fetching TikTok details:', error);
-            return null;
+            console.error('Error updating song registration:', error);
         }
     }
 
-    async function updateSongsWithThumbnails() {
-        const songsRef = collection(db, 'songs');
-        const songSnapshot = await getDocs(songsRef);
+    async function loadChatMessages() {
+        const chatRef = collection(db, 'chat');
+        const q = query(chatRef, orderBy('timestamp', 'asc'));
+        onSnapshot(q, (querySnapshot) => {
+            chatMessages.innerHTML = ''; // Wyczyść istniejące wiadomości
+            querySnapshot.forEach((doc) => {
+                const messageData = doc.data();
+                displayMessage(messageData.username, messageData.message);
+            });
+        });
+    }
 
-        for (const doc of songSnapshot.docs) {
-            const songData = doc.data();
-            const thumbnailUrl = await fetchThumbnailUrl(songData.tiktokUrl);
-            
-            if (thumbnailUrl) {
-                await updateDoc(doc.ref, { thumbnail: thumbnailUrl });
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = chatInput.value.trim();
+        if (message) {
+            try {
+                const chatRef = collection(db, 'chat');
+                await addDoc(chatRef, {
+                    username: currentUsername,
+                    message,
+                    timestamp: new Date()
+                });
+                chatInput.value = '';
+            } catch (error) {
+                console.error('Error sending message:', error);
             }
         }
-    }
+    });
 
-    // Uncomment the following line if you need to update thumbnails manually
-    // updateSongsWithThumbnails();
+    function displayMessage(username, message) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = `${username}: ${message}`;
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Przewiń na dół
+    }
 });
