@@ -125,6 +125,7 @@ button:hover {
     align-items: center; /* Wyśrodkowuje zawartość wzdłuż osi poprzecznej */
     justify-content: center; /* Opcjonalnie: wyśrodkowuje wzdłuż osi głównej */
     padding: 10px;
+
     border-bottom: 1px solid #555555a6;
     background-color: rgba(0, 0, 0, 0.701); /* Przezroczysty czarny kolor */
     margin-bottom: 10px;
@@ -134,7 +135,8 @@ button:hover {
 
 #songs li img {
     margin-bottom: 10px;
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Dodanie czarnego cienia */
 }
