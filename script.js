@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 songsUl.appendChild(li);
             }
 
+            // Dodanie event listenerów do miniatur i przycisków
             const addUserButtons = document.querySelectorAll('.add-user-btn');
             addUserButtons.forEach(button => {
                 button.addEventListener('click', handleAddUserClick);
@@ -146,7 +147,69 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
+            // Dodanie event listenera do odtwarzacza audio
+            const audios = document.querySelectorAll('#songs li audio');
+            audios.forEach(audio => {
+                audio.addEventListener('play', (e) => {
+                    // Usunięcie klasy aktywnej z innych elementów
+                    document.querySelectorAll('#songs li').forEach(li => li.classList.remove('active'));
+                    document.querySelectorAll('#songs li img').forEach(img => img.classList.remove('playing'));
+
+                    // Dodanie klasy aktywnej do aktualnie odtwarzanej piosenki
+                    const li = e.target.closest('li');
+                    if (li) {
+                        li.classList.add('active');
+                        const img = li.querySelector('img');
+                        if (img) {
+                            img.classList.add('playing');
+                        }
+                    }
+                });
+
+                audio.addEventListener('pause', (e) => {
+                    // Usunięcie klasy 'playing' gdy audio jest pauzowane
+                    const li = e.target.closest('li');
+                    if (li) {
+                        const img = li.querySelector('img');
+                        if (img) {
+                            img.classList.remove('playing');
+                        }
+                    }
+                });
+
+                audio.addEventListener('ended', (e) => {
+                    // Usunięcie klasy 'playing' gdy audio jest zakończone
+                    const li = e.target.closest('li');
+                    if (li) {
+                        const img = li.querySelector('img');
+                        if (img) {
+                            img.classList.remove('playing');
+                        }
+                    }
+                });
+            });
+
             songListDiv.classList.remove('hidden');
+
+            // Intersection Observer dla widoczności piosenek
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, {
+                threshold: 0.5 // Procent widoczności elementu potrzebny do uznania go za widoczny
+            });
+
+            // Dodanie Intersection Observer do każdego elementu listy
+            const items = document.querySelectorAll('#songs li');
+            items.forEach(item => {
+                observer.observe(item);
+            });
+
         } catch (error) {
             console.error('Error loading songs:', error);
         }
@@ -198,7 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    
 
     // Uncomment the following line if you need to update thumbnails manually
     // updateSongsWithThumbnails();
