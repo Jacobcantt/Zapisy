@@ -26,9 +26,19 @@
         <div id="songList" class="hidden">
             <h1>Zapisz się do piosenki pod którą będzie edit.</h1>
             <h5>Jeżeli nagrałaś Tiktoka do jakiejś piosenki, zapisz się i czekaj na edita!!.</h5>
+            <h4>Kliknij w miniaturkę aby przejść do dźwięku na Tiktoku</h4>
             <ul id="songs"></ul>
         </div>
-        
+
+        <!-- Dodana sekcja czatu -->
+        <div id="chatSection" class="hidden">
+            <h2>Czat</h2>
+            <div id="chatMessages"></div>
+            <form id="chatForm">
+                <input type="text" id="chatInput" placeholder="Wpisz wiadomość..." required>
+                <button type="submit">Wyślij</button>
+            </form>
+        </div>
     </div>
     <script type="module" src="script.js"></script>
 </body>
