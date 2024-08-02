@@ -99,10 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function extractTitleFromUrl(url) {
-        const match = url.match(/(?:https?:\/\/)?(?:www\.)?tiktok\.com\/music\/([a-zA-Z0-9._-]+)/);
+        const match = url.match(/(?:https?:\/\/)?(?:www\.)?tiktok\.com\/music\/([\wąćęłńóśźżĄĆĘŁŃÓŚŹŻ-]+)/);
         if (match) {
             let title = match[1].replace(/-/g, ' ');  // Zamiana myślników na spacje
             title = title.replace(/\s+\d+$/, ''); // Usunięcie numerków na końcu
+            console.log("Extracted title:", title); // Logowanie tytułu
             return title;
         }
         return 'Unknown Title';
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (const song of songs) {
                 const thumbnailUrl = song.thumbnail || ''; 
                 const title = song.title || extractTitleFromUrl(song.tiktokUrl);
+                console.log("Song title:", title); // Logowanie tytułu piosenki
                 const audioUrl = song.audioUrl || ''; // Pobieranie URL do pliku MP3
                 const registeredUsers = song.registeredUsers || [];
                 const userIsRegistered = registeredUsers.includes(currentUsername);
